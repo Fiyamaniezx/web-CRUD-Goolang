@@ -1,0 +1,113 @@
+<!-- template/tambah.html -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Motor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Form Tambah Motor</h1>
+        <form method="POST" action="/tambah">
+            <div class="mb-3">
+                <label class="form-label">Merek</label>
+                <select name="brand" class="form-select" id="brandSelect" onchange="updateMotorOptions()" required>
+                    <option value="" selected disabled>Pilih Merek</option>
+                    <option value="Honda">Honda</option>
+                    <option value="Yamaha">Yamaha</option>
+                    <option value="Suzuki">Suzuki</option>
+                    <option value="Kawasaki">Kawasaki</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Nama Motor</label>
+                <select name="name" class="form-select" id="motorNameSelect" required>
+                    <option value="">Pilih Nama Motor</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Kapasitas Mesin (CC)</label>
+                <input type="number" name="engine_capacity" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Transmisi</label>
+                <select name="transmission" class="form-select">
+                    <option value="Manual">Manual</option>
+                    <option value="Automatic">Automatic</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Warna</label>
+                <select name="color" class="form-select" required>
+                    <option value="" selected disabled>Pilih Warna</option>
+                    <option value="Hitam">Hitam</option>
+                    <option value="Putih">Putih</option>
+                    <option value="Merah">Merah</option>
+                    <option value="Biru">Biru</option>
+                    <option value="Hijau">Hijau</option>
+                    <option value="Abu-abu">Abu-abu</option>
+                    <option value="Silver">Silver</option>
+                    <option value="Emas">Emas</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Tahun</label>
+                <select name="year" class="form-select" required>
+                    <option value="" selected disabled>Pilih Tahun</option>
+                    {{ range $i := .Years }}
+                        <option value="{{ $i }}">{{ $i }}</option>
+                    {{ end }}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Harga</label>
+                <input type="number" name="price" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Stok</label>
+                <input type="number" name="stock" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Deskripsi</label>
+                <textarea name="description" class="form-control"></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Simpan</button>
+            <a href="/" class="btn btn-secondary">Kembali</a>
+        </form>
+    </div>
+
+    <!-- Script untuk update nama motor -->
+    <script>
+        function updateMotorOptions() {
+            const brand = document.getElementById("brandSelect").value;
+            const motorSelect = document.getElementById("motorNameSelect");
+            let options = [];
+
+            switch (brand) {
+                case "Honda":
+                    options = ["Honda BeAT", "Scoopy", "Vario", "PCX", "ADV", "CBR", "CRF", "Revo"];
+                    break;
+                case "Yamaha":
+                    options = ["NMAX", "Aerox", "Fazzio", "Lexi", "Mio", "Fino", "FreeGo", "Gear", "X-Ride", "XMAX", "Grand Filano", "NMAX Turbo", "R15", "YZF R25", "MT25", "MT15"];
+                    break;
+                case "Suzuki":
+                    options = ["Satria F150", "GSX R150", "V-Strom 250 SX"];
+                    break;
+                case "Kawasaki":
+                    options = ["Ninja ZX-25R", "Ninja 250", "Ninja ZX-25RR", "Ninja ZX-4RR", "Ninja H2", "Ninja ZX-6R", "Z125 PRO", "Z900RS", "Z1000", "KLX 150", "KLX 150 SM", "KLX 250", "KLX 140R", "KLX 150 SM SE", "KLX 230"];
+                    break;
+            }
+
+            motorSelect.innerHTML = '<option value="">Pilih Nama Motor</option>';
+            options.forEach(function(model) {
+                const opt = document.createElement("option");
+                opt.value = model;
+                opt.text = model;
+                motorSelect.appendChild(opt);
+            });
+        }
+    </script>
+</body>
+</html>
